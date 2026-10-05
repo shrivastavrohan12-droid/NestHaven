@@ -37,7 +37,7 @@ router
   .get(wrapAsync(listingController.showListing))
   .put(
     isLoggedIn,
-    isListingOwner,
+    wrapAsync(isListingOwner),
     upload.single("listing[image]"),
     validateListing,
     wrapAsync(listingController.updateListing),
@@ -51,7 +51,7 @@ router
 router.get(
   "/:id/edit",
   isLoggedIn,
-  isListingOwner,
+  wrapAsync(isListingOwner),
   listingController.renderEditForm,
 );
 
