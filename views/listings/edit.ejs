@@ -1,0 +1,112 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="row mt-3">
+  <div class="col-12 col-lg-8 offset-lg-2">
+    <br />
+    <h3>Edit Your Listing</h3>
+
+    <form
+      method="POST"
+      action="/listings/<%= listing._id %>?_method=PUT"
+      novalidate
+      class="needs-validation"
+      enctype="multipart/form-data"
+    >
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input
+          name="listing[title]"
+          value="<%= listing.title %>"
+          type="text"
+          required
+          class="form-control"
+        />
+        <div class="valid-feedback">Title Looks good!</div>
+      </div>
+
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea name="listing[description]" class="form-control" required>
+<%= listing.description %></textarea
+        >
+        <div class="invalid-feedback">Please enter a short description</div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Original Listing Image</label>
+        <% if (originalImageUrl) { %>
+          <br />
+          <img
+            src="<%= originalImageUrl %>"
+            class="img-fluid rounded mb-3 edit-image-preview"
+            alt="Original Listing Image"
+          />
+        <% } else { %>
+          <p class="text-muted">No image is available for this listing.</p>
+        <% } %>
+
+        <label for="image" class="form-label">Upload New Image</label>
+        <input
+          name="listing[image]"
+          type="file"
+          accept="image/png,image/jpeg,image/jpg"
+          class="form-control"
+        />
+        <div class="form-text">Leave blank to keep the current image.</div>
+      </div>
+      <div class="row">
+        <div class="mb-3 col-md-4">
+          <label for="price" class="form-label">Price</label>
+          <input
+            name="listing[price]"
+            value="<%= listing.price %>"
+            type="number"
+            class="form-control"
+            required
+          />
+          <div class="invalid-feedback">Price should be valid</div>
+        </div>
+
+        <div class="mb-3 col-md-8">
+          <label for="location" class="form-label">Location</label>
+          <input
+            name="listing[location]"
+            value="<%= listing.location %>"
+            type="text"
+            class="form-control"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="country" class="form-label">Country</label>
+        <input
+          name="listing[country]"
+          value="<%= listing.country %>"
+          type="text"
+          class="form-control"
+          required
+        />
+        <div class="invalid-feedback">Country name should be valid</div>
+      </div>
+
+      <div class="row">
+        <div class="mb-3 col-md-6">
+          <label for="category" class="form-label">Category</label>
+          <select name="listing[category]" id="category" class="form-select" required>
+            <% categories.forEach((category) => { %><option value="<%= category %>" <%= listing.category === category ? "selected" : "" %>><%= category %></option><% }) %>
+          </select>
+        </div>
+        <div class="mb-3 col-md-6">
+          <label for="phone" class="form-label">Contact Number</label>
+          <input name="listing[phone]" id="phone" value="<%= listing.phone || "" %>" type="tel" class="form-control" required />
+          <div class="invalid-feedback">Please enter a valid Indian phone number.</div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-dark edit-btn mt-3">Edit</button>
+      <br /><br />
+    </form>
+  </div>
+</div>
